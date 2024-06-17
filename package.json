@@ -1,0 +1,17 @@
+{
+  "name": "anim_scaler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scaler.js",
+  "type": "module",
+  "scripts": {
+    "start": "node scaler.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.4.1",
+    "lodash": "^4.17.21"
+  }
+}
