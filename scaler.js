@@ -3,6 +3,22 @@ import path from "path";
 import { globSync } from 'glob';
 import _ from 'lodash';
 
+/**
+ * Resizing consists of opening the anim file, and writing a modified copy, "<Anim name>_rescaled.anim"
+ * The operation is non-destructive to the original files.
+ * Running the script again will modify the _rescaled anims.
+ */
+
+const RESCALED = '_rescaled'
+
+// Only animations in this directory will be resized.
+// const directoryOfAnims = 'C:\\Users\\Username\\AppData\\Local\\VRChatProjects\\Avatar Project\\Assets\\Some Product\\animations';
+const directoryOfAnims = '';
+
+// TODO: You change this to be the ratio of your bone offsets to the prefab bone offsets. It will multiply all position offsets by this value.
+const scalar = 2.000724664917; // Ratio by which to resize the animation.
+
+// Do not touch
 const DISRUPTING_EVENTS = [
     'm_ObjectHideFlags',
     'm_CorrespondingSourceObject',
@@ -30,11 +46,6 @@ const DISRUPTING_EVENTS = [
     'm_Events'
 ];
 
-const RESCALED = '_rescaled'
-
-// const directoryOfAnims = 'C:\\Users\\BirdTho\\AppData\\Local\\VRChatProjects\\Arden 2022 NSFW\\Assets\\The Taper\\animations';
-const directoryOfAnims = 'C:\\Users\\BirdTho\\AppData\\Local\\VRChatProjects\\Oul Davali\\Assets\\The Taper\\animations';
-
 // Nuke old anims
 const filesToDelete = globSync(directoryOfAnims + `/*${RESCALED}.anim`).concat(globSync(directoryOfAnims + `/*${RESCALED}.anim.meta`));
 filesToDelete.forEach(file => unlinkSync(file));
@@ -50,8 +61,6 @@ const outFiles = files.map((file) => {
     return `${tokens[0]}${RESCALED}.anim`;
 });
 
-// const scalar = 2.000724664917; // Arden
-const scalar = 0.012096534362196413480293397138059; // Ouln
 
 const entries = _.zip(files, outFiles);
 
